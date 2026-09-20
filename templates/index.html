@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Predicción de Combustible</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            min-height: 100vh;
+            padding: 30px;
+        }
+
+        .contenedor {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .encabezado {
+            background: #17365d;
+            color: white;
+            padding: 30px;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+        }
+
+        .encabezado h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .encabezado p {
+            font-size: 16px;
+        }
+
+        .formulario {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.10);
+        }
+
+        .seccion {
+            margin-bottom: 30px;
+        }
+
+        .seccion h2 {
+            color: #17365d;
+            margin-bottom: 18px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 8px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .campo label {
+            font-weight: bold;
+            margin-bottom: 7px;
+            color: #333;
+        }
+
+        .campo input,
+        .campo select {
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .campo input:focus,
+        .campo select:focus {
+            outline: none;
+            border-color: #17365d;
+        }
+
+        .boton {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background: #17365d;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .boton:hover {
+            opacity: 0.9;
+        }
+
+        .resultado {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 10px;
+            background: #eef6ff;
+            text-align: center;
+            border: 2px solid #17365d;
+        }
+
+        .resultado h2 {
+            color: #17365d;
+            margin-bottom: 15px;
+        }
+
+        .combustible {
+            font-size: 30px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .error {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #ffecec;
+            color: #a00000;
+            border-radius: 8px;
+        }
+
+        .pie {
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        @media (max-width: 800px) {
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                padding: 10px;
+            }
+
+            .formulario {
+                padding: 20px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="contenedor">
+
+    <div class="encabezado">
+
+        <h1>🚗 Predicción de Tipo de Combustible</h1>
+
+        <p>
+            Sistema de predicción basado en Minería de Datos
+        </p>
+
+    </div>
+
+
+    <div class="formulario">
+
+        <form id="formularioVehiculo">
+
+
+            <!-- ============================= -->
+            <!-- INFORMACIÓN DEL VEHÍCULO -->
+            <!-- ============================= -->
+
+            <div class="seccion">
+
+                <h2>📋 Información del vehículo</h2>
+
+                <div class="grid">
+
+                    <div class="campo">
+
+                        <label>Tipo de transacción</label>
+
+                        <select id="tipo_transaccion" required>
+
+                            <option value="">Seleccione...</option>
+
+                            <option value="COMPRA LOCAL">
+                                COMPRA LOCAL
+                            </option>
+
+                            <option value="IMPORTACIÓN DIRECTA">
+                                IMPORTACIÓN DIRECTA
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label>Marca</label>
+
+                        <input
+                            type="text"
+                            id="marca"
+                            placeholder="Ej. KIA"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label>Modelo</label>
+
+                        <input
+                            type="text"
+                            id="modelo"
+                            placeholder="Ej. SOLUTO LX AC 1.4 4P 4X2 TM"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label>País</label>
+
+                        <input
+                            type="text"
+                            id="pais"
+                            placeholder="Ej. COREA DEL SUR"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label>Clase</label>
+
+                        <select id="clase" required>
+
+                            <option value="">Seleccione...</option>
+
+                            <option value="AUTOMOVIL">AUTOMOVIL</option>
+                            <option value="MOTOCICLETA">MOTOCICLETA</option>
+                            <option value="JEEP">JEEP</option>
+                            <option value="CAMIONETA">CAMIONETA</option>
+                            <option value="CAMION">CAMION</option>
+                            <option value="TRAILER">TRAILER</option>
+                            <option value="VOLQUETA">VOLQUETA</option>
+                            <option value="OMNIBUS">OMNIBUS</option>
+                            <option value="ESPECIAL">ESPECIAL</option>
+                            <option value="TANQUERO">TANQUERO</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label>Tipo</label>
+
+                        <select id="tipo" required>
+
+                            <option value="">Seleccione...</option>
+
+                            <option value="LIVIANO">LIVIANO</option>
+                            <option value="PESADO">PESADO</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label>Tipo de servicio</label>
+
+                        <select id="tipo_servicio" required>
+
+                            <option value="">Seleccione...</option>
+
+                            <option value="PAR">PAR</option>
+                            <option value="ALQ">ALQ</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label>Cantón</label>
+
+                        <input
+                            type="text"
+                            id="canton"
+                            placeholder="Ej. QUITO"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label>Color 1</label>
+
+                        <input
+                            type="text"
+                            id="color_1"
+                            placeholder="Ej. BLA"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label>Color 2</label>
+
+                        <input
+                            type="text"
+                            id="color_2"
+                            placeholder="Ej. NEG"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label>Persona natural / jurídica</label>
+
+                        <select id="persona_natural_juridica" required>
+
+                            <option value="">Seleccione...</option>
+
+                            <option value="NATURAL">NATURAL</option>
+
+                            <option value="JURÍDICA">JURÍDICA</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ============================= -->
+            <!-- INFORMACIÓN NUMÉRICA -->
+            <!-- ============================= -->
+
+            <div class="seccion">
+
+                <h2>📊 Características numéricas</h2>
+
+                <div class="grid">
+
+                    <div class="campo">
+
+                        <label>Año modelo</label>
+
+                        <input
+                            type="number"
+                            id="ano_modelo"
+                            value="2026"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label>Avalúo</label>
+
+                        <input
+                            type="number"
+                            id="avaluo"
+                            step="0.01"
+                            value="18000"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label>Cilindraje</label>
+
+                        <input
+                            type="number"
+                            id="cilindraje"
+                            value="1400"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label>Año proceso</label>
+
+                        <input
+                            type="number"
+                            id="ano_proceso"
+                            value="2026"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label>Días compra - proceso</label>
+
+                        <input
+                            type="number"
+                            id="dias_compra_proceso"
+                            value="10"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label>Diferencia año modelo</label>
+
+                        <input
+                            type="number"
+                            id="diferencia_anio_modelo"
+                            value="0"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ============================= -->
+            <!-- VARIABLES DERIVADAS -->
+            <!-- ============================= -->
+
+            <div class="seccion">
+
+                <h2>⚙️ Variables derivadas</h2>
+
+                <div class="grid">
+
+                    <div class="campo">
+
+                        <label>¿Modelo futuro?</label>
+
+                        <select id="modelo_futuro" required>
+
+                            <option value="NO">NO</option>
+                            <option value="SI">SI</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label>¿Compra posterior al proceso?</label>
+
+                        <select
+                            id="compra_posterior_proceso"
+                            required
+                        >
+
+                            <option value="NO">NO</option>
+                            <option value="SI">SI</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="boton"
+            >
+
+                🔮 PREDECIR COMBUSTIBLE
+
+            </button>
+
+
+        </form>
+
+
+        <!-- ============================= -->
+        <!-- RESULTADO -->
+        <!-- ============================= -->
+
+        <div
+            id="resultado"
+            class="resultado"
+        >
+
+            <h2>Resultado de la predicción</h2>
+
+            <div
+                id="combustible"
+                class="combustible"
+            ></div>
+
+            <p>
+                <strong>Modelo utilizado:</strong>
+                <span id="modeloUtilizado"></span>
+            </p>
+
+            <p>
+                <strong>Características utilizadas:</strong>
+                <span id="caracteristicas"></span>
+            </p>
+
+        </div>
+
+
+        <div
+            id="error"
+            class="error"
+        ></div>
+
+
+        <div class="pie">
+
+            Sistema desarrollado mediante técnicas de
+            <strong>Minería de Datos</strong>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+document
+    .getElementById("formularioVehiculo")
+    .addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+
+        const resultado =
+            document.getElementById("resultado");
+
+        const error =
+            document.getElementById("error");
+
+
+        resultado.style.display = "none";
+
+        error.style.display = "none";
+
+
+        // ==========================================
+        // CONSTRUIR DATOS PARA LA API
+        // ==========================================
+
+        const datos = {
+
+            tipo_transaccion:
+                document.getElementById(
+                    "tipo_transaccion"
+                ).value,
+
+            marca:
+                document.getElementById(
+                    "marca"
+                ).value,
+
+            modelo:
+                document.getElementById(
+                    "modelo"
+                ).value,
+
+            pais:
+                document.getElementById(
+                    "pais"
+                ).value,
+
+            clase:
+                document.getElementById(
+                    "clase"
+                ).value,
+
+            tipo:
+                document.getElementById(
+                    "tipo"
+                ).value,
+
+            tipo_servicio:
+                document.getElementById(
+                    "tipo_servicio"
+                ).value,
+
+            canton:
+                document.getElementById(
+                    "canton"
+                ).value,
+
+            color_1:
+                document.getElementById(
+                    "color_1"
+                ).value,
+
+            color_2:
+                document.getElementById(
+                    "color_2"
+                ).value,
+
+            persona_natural_juridica:
+                document.getElementById(
+                    "persona_natural_juridica"
+                ).value,
+
+            ano_modelo:
+                Number(
+                    document.getElementById(
+                        "ano_modelo"
+                    ).value
+                ),
+
+            avaluo:
+                Number(
+                    document.getElementById(
+                        "avaluo"
+                    ).value
+                ),
+
+            cilindraje:
+                Number(
+                    document.getElementById(
+                        "cilindraje"
+                    ).value
+                ),
+
+            ano_proceso:
+                Number(
+                    document.getElementById(
+                        "ano_proceso"
+                    ).value
+                ),
+
+            dias_compra_proceso:
+                Number(
+                    document.getElementById(
+                        "dias_compra_proceso"
+                    ).value
+                ),
+
+            diferencia_anio_modelo:
+                Number(
+                    document.getElementById(
+                        "diferencia_anio_modelo"
+                    ).value
+                ),
+
+            modelo_futuro:
+                document.getElementById(
+                    "modelo_futuro"
+                ).value,
+
+            compra_posterior_proceso:
+                document.getElementById(
+                    "compra_posterior_proceso"
+                ).value
+        };
+
+
+        // ==========================================
+        // ENVIAR DATOS A FASTAPI
+        // ==========================================
+
+        try {
+
+            const respuesta = await fetch(
+                "/predecir",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify(datos)
+                }
+            );
+
+
+            const informacion =
+                await respuesta.json();
+
+
+            if (!respuesta.ok) {
+
+                throw new Error(
+                    informacion.detail ||
+                    "Error al realizar la predicción."
+                );
+
+            }
+
+
+            // ======================================
+            // MOSTRAR RESULTADO
+            // ======================================
+
+            document.getElementById(
+                "combustible"
+            ).textContent =
+                "⛽ " + informacion.prediccion;
+
+
+            document.getElementById(
+                "modeloUtilizado"
+            ).textContent =
+                informacion.modelo_utilizado;
+
+
+            document.getElementById(
+                "caracteristicas"
+            ).textContent =
+                informacion.caracteristicas_utilizadas;
+
+
+            resultado.style.display = "block";
+
+
+        } catch (errorPrediccion) {
+
+            error.textContent =
+                "❌ " + errorPrediccion.message;
+
+            error.style.display = "block";
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
