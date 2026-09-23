@@ -80,6 +80,7 @@
 
         .campo input,
         .campo select {
+            width: 100%;
             padding: 11px;
             border: 1px solid #ccc;
             border-radius: 7px;
@@ -88,6 +89,7 @@
 
         .campo input:focus,
         .campo select:focus {
+            box-shadow: 0 0 0 3px rgba(23,54,93,0.10);
             outline: none;
             border-color: #17365d;
         }
@@ -161,7 +163,70 @@
             }
         }
 
-    </style>
+    
+        select {
+            appearance: auto;
+            -webkit-appearance: auto;
+            -moz-appearance: auto;
+            cursor: pointer;
+            background-color: #ffffff;
+        }
+
+.ayuda-campo{
+    margin-top: 5px;
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.35;
+}
+
+#diferencia_anio_modelo{
+    background: #e8f0fb;
+    font-weight: bold;
+    color: #17365d;
+    cursor: not-allowed;
+}
+
+.nota-datos{
+    margin: 10px 0 18px;
+    padding: 12px 14px;
+    border-left: 4px solid #17365d;
+    background: #f1f6fc;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #334155;
+}
+.probabilidades{
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 1px solid #cbd5e1;
+    text-align: left;
+}
+.probabilidades h3{
+    margin: 0 0 10px;
+    color: #17365d;
+    font-size: 18px;
+}
+.prob-item{
+    margin: 8px 0;
+}
+.prob-label{
+    display:flex;
+    justify-content:space-between;
+    font-size:14px;
+    margin-bottom:4px;
+}
+.prob-bar{
+    height:10px;
+    background:#e2e8f0;
+    border-radius:6px;
+    overflow:hidden;
+}
+.prob-fill{
+    height:100%;
+    background:#17365d;
+    border-radius:6px;
+}
+</style>
 </head>
 
 <body>
@@ -182,6 +247,13 @@
     <div class="formulario">
 
         <form id="formularioVehiculo">
+
+
+<div class="nota-datos">
+    💡 <strong>Recomendación:</strong> seleccione una marca y luego un modelo correspondiente.
+    Los campos derivados se calculan o validan para mantener coherencia entre los datos ingresados.
+</div>
+
 
 
             <!-- ============================= -->
@@ -216,30 +288,48 @@
 
 
                     <div class="campo">
-
                         <label>Marca</label>
-
-                        <input
-                            type="text"
-                            id="marca"
-                            placeholder="Ej. KIA"
-                            required
-                        >
-
+                        <select id="marca" required>
+                            <option value="">Seleccione una marca...</option>
+                            <option value="CHEVROLET">CHEVROLET</option>
+                            <option value="KIA">KIA</option>
+                            <option value="TOYOTA">TOYOTA</option>
+                            <option value="HYUNDAI">HYUNDAI</option>
+                            <option value="NISSAN">NISSAN</option>
+                            <option value="SUZUKI">SUZUKI</option>
+                            <option value="MAZDA">MAZDA</option>
+                            <option value="RENAULT">RENAULT</option>
+                            <option value="FORD">FORD</option>
+                            <option value="VOLKSWAGEN">VOLKSWAGEN</option>
+                            <option value="JAC">JAC</option>
+                            <option value="CHANGAN">CHANGAN</option>
+                            <option value="JETOUR">JETOUR</option>
+                            <option value="BYD">BYD</option>
+                            <option value="CHERY">CHERY</option>
+                            <option value="MITSUBISHI">MITSUBISHI</option>
+                            <option value="HONDA">HONDA</option>
+                            <option value="SUBARU">SUBARU</option>
+                            <option value="BMW">BMW</option>
+                            <option value="MERCEDES BENZ">MERCEDES BENZ</option>
+                            <option value="AUDI">AUDI</option>
+                            <option value="VOLVO">VOLVO</option>
+                            <option value="PEUGEOT">PEUGEOT</option>
+                            <option value="CITROEN">CITROEN</option>
+                            <option value="FIAT">FIAT</option>
+                            <option value="JEEP">JEEP</option>
+                            <option value="ISUZU">ISUZU</option>
+                            <option value="FOTON">FOTON</option>
+                            <option value="DFSK">DFSK</option>
+                            <option value="MG">MG</option>
+                            <option value="HAVAL">HAVAL</option>
+                        </select>
                     </div>
 
-
                     <div class="campo">
-
                         <label>Modelo</label>
-
-                        <input
-                            type="text"
-                            id="modelo"
-                            placeholder="Ej. SOLUTO LX AC 1.4 4P 4X2 TM"
-                            required
-                        >
-
+                        <select id="modelo" required disabled>
+                            <option value="">Primero seleccione una marca...</option>
+                        </select>
                     </div>
 
 
@@ -247,12 +337,25 @@
 
                         <label>País</label>
 
-                        <input
-                            type="text"
-                            id="pais"
-                            placeholder="Ej. COREA DEL SUR"
-                            required
-                        >
+                        <select id="pais" required>
+                            <option value="">Seleccione un país...</option>
+                            <option value="ECUADOR">ECUADOR</option>
+                            <option value="CHINA">CHINA</option>
+                            <option value="JAPÓN">JAPÓN</option>
+                            <option value="COREA DEL SUR">COREA DEL SUR</option>
+                            <option value="ESTADOS UNIDOS">ESTADOS UNIDOS</option>
+                            <option value="ALEMANIA">ALEMANIA</option>
+                            <option value="MÉXICO">MÉXICO</option>
+                            <option value="BRASIL">BRASIL</option>
+                            <option value="ARGENTINA">ARGENTINA</option>
+                            <option value="FRANCIA">FRANCIA</option>
+                            <option value="ESPAÑA">ESPAÑA</option>
+                            <option value="ITALIA">ITALIA</option>
+                            <option value="INDIA">INDIA</option>
+                            <option value="TAILANDIA">TAILANDIA</option>
+                            <option value="TURQUÍA">TURQUÍA</option>
+                            <option value="OTRO">OTRO</option>
+                        </select>
 
                     </div>
 
@@ -390,12 +493,26 @@
 
                         <label>Año modelo</label>
 
-                        <input
-                            type="number"
-                            id="ano_modelo"
-                            value="2026"
-                            required
-                        >
+                        <select id="ano_modelo" required>
+                            <option value="">Seleccione el año...</option>
+                            <option value="2026" selected>2026</option>
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                            <option value="2015">2015</option>
+                            <option value="2014">2014</option>
+                            <option value="2013">2013</option>
+                            <option value="2012">2012</option>
+                            <option value="2011">2011</option>
+                            
+                        </select>
 
                     </div>
 
@@ -433,12 +550,25 @@
 
                         <label>Año proceso</label>
 
-                        <input
-                            type="number"
-                            id="ano_proceso"
-                            value="2026"
-                            required
-                        >
+                        <select id="ano_proceso" required>
+                            <option value="">Seleccione el año...</option>
+                            <option value="2026" selected>2026</option>
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                            <option value="2015">2015</option>
+                            <option value="2014">2014</option>
+                            <option value="2013">2013</option>
+                            <option value="2012">2012</option>
+                            <option value="2011">2011</option>
+                        </select>
 
                     </div>
 
@@ -451,8 +581,13 @@
                             type="number"
                             id="dias_compra_proceso"
                             value="10"
+                            step="1"
                             required
                         >
+
+                        <small class="ayuda-campo">
+                            Días transcurridos entre la compra y el proceso, según el registro.
+                        </small>
 
                     </div>
 
@@ -465,8 +600,13 @@
                             type="number"
                             id="diferencia_anio_modelo"
                             value="0"
+                            readonly
                             required
                         >
+
+                        <small class="ayuda-campo">
+                            Se calcula automáticamente: Año proceso − Año modelo.
+                        </small>
 
                     </div>
 
@@ -490,11 +630,13 @@
                         <label>¿Modelo futuro?</label>
 
                         <select id="modelo_futuro" required>
-
                             <option value="NO">NO</option>
                             <option value="SI">SI</option>
-
                         </select>
+
+                        <small class="ayuda-campo">
+                            Se determina automáticamente según el año modelo y el año de proceso.
+                        </small>
 
                     </div>
 
@@ -559,6 +701,11 @@
                 <span id="caracteristicas"></span>
             </p>
 
+            <div id="probabilidades" class="probabilidades">
+                <h3>Probabilidades estimadas</h3>
+                <div id="listaProbabilidades"></div>
+            </div>
+
         </div>
 
 
@@ -582,6 +729,106 @@
 
 <script>
 
+// Modelos agrupados por marca para evitar combinaciones incoherentes.
+const modelosPorMarca = {
+    "CHEVROLET": ["AVEO", "ONIX", "SAIL", "TRACKER", "CAPTIVA", "TAHOE", "TRAILBLAZER", "SPARK", "EQUINOX"],
+    "KIA": ["SPORTAGE", "RIO", "SELTOS", "SONET", "CERATO", "PICANTO"],
+    "TOYOTA": ["COROLLA", "YARIS", "RAV4", "HILUX", "FORTUNER", "LAND CRUISER"],
+    "HYUNDAI": ["TUCSON", "CRETA", "SANTA FE", "ACCENT", "KONA"],
+    "NISSAN": ["FRONTIER", "VERSA", "SENTRA", "KICKS", "X-TRAIL"],
+    "SUZUKI": ["VITARA", "SWIFT", "JIMNY"],
+    "MAZDA": ["CX-3", "CX-5", "CX-30", "BT-50"],
+    "RENAULT": ["DUSTER", "LOGAN", "SANDERO", "KWID"],
+    "FORD": ["RANGER", "ESCAPE", "EXPLORER", "EVEREST", "MUSTANG"],
+    "VOLKSWAGEN": ["GOL", "VIRTUS", "T-CROSS", "TIGUAN", "AMAROK"],
+    "JAC": ["JS2", "JS4", "T8", "T9"],
+    "CHANGAN": ["CS15", "CS35", "CS55", "CS75", "HUNTER"],
+    "JETOUR": ["X70", "X90", "DASHING"],
+    "BYD": ["DOLPHIN", "SONG", "YANGWANG"],
+    "CHERY": ["TIGGO 2", "TIGGO 4", "TIGGO 7", "TIGGO 8"],
+    "MITSUBISHI": ["L200", "ASX", "OUTLANDER", "MONTERO"],
+    "HONDA": ["CIVIC", "CR-V", "HR-V"],
+    "SUBARU": ["FORESTER", "OUTBACK", "XV"],
+    "BMW": ["SERIE 3", "SERIE 5", "X1", "X3", "X5"],
+    "MERCEDES BENZ": ["CLASE A", "CLASE C", "GLA", "GLC"],
+    "AUDI": ["A3", "A4", "Q3", "Q5"],
+    "VOLVO": ["XC40", "XC60", "XC90"],
+    "PEUGEOT": ["208", "2008", "3008", "5008"],
+    "CITROEN": ["C3", "C4", "C5 AIRCROSS"],
+    "FIAT": ["ARGO", "CRONOS", "STRADA", "TORO"],
+    "JEEP": ["RENEGADE", "COMPASS", "CHEROKEE", "WRANGLER"],
+    "ISUZU": ["D-MAX", "MU-X"],
+    "FOTON": ["TUNLAND", "MILLER"],
+    "DFSK": ["500", "580", "K01"],
+    "MG": ["MG3", "ZS", "HS"],
+    "HAVAL": ["JOLION", "H6", "H9"]
+};
+
+const marcaSelect = document.getElementById("marca");
+const modeloSelect = document.getElementById("modelo");
+
+marcaSelect.addEventListener("change", function () {
+    const marca = this.value;
+    modeloSelect.innerHTML = "";
+
+    if (!marca || !modelosPorMarca[marca]) {
+        modeloSelect.disabled = true;
+        modeloSelect.innerHTML = '<option value="">Primero seleccione una marca...</option>';
+        return;
+    }
+
+    modeloSelect.disabled = false;
+    modeloSelect.innerHTML = '<option value="">Seleccione un modelo...</option>';
+
+    modelosPorMarca[marca].forEach(modelo => {
+        const option = document.createElement("option");
+        option.value = modelo;
+        option.textContent = modelo;
+        modeloSelect.appendChild(option);
+    });
+
+    // El modelo anterior se borra al cambiar de marca.
+    modeloSelect.value = "";
+});
+
+// Al cargar la página no se selecciona ningún modelo automáticamente.
+// El usuario debe elegir primero la marca; después aparecerán
+// únicamente los modelos asociados a esa marca.
+marcaSelect.value = "";
+modeloSelect.innerHTML = '<option value="">Primero seleccione una marca...</option>';
+modeloSelect.disabled = true;
+
+
+
+// ======================================================
+// VARIABLES CALCULADAS AUTOMÁTICAMENTE
+// ======================================================
+const anoModeloSelect = document.getElementById("ano_modelo");
+const anoProcesoSelect = document.getElementById("ano_proceso");
+const diferenciaInput = document.getElementById("diferencia_anio_modelo");
+const modeloFuturoSelect = document.getElementById("modelo_futuro");
+
+function actualizarVariablesDerivadas() {
+    const anoModelo = Number(anoModeloSelect.value);
+    const anoProceso = Number(anoProcesoSelect.value);
+
+    if (anoModelo && anoProceso) {
+        const diferencia = anoProceso - anoModelo;
+        diferenciaInput.value = diferencia;
+
+        // Un modelo es futuro cuando su año es posterior al año del proceso.
+        modeloFuturoSelect.value = anoModelo > anoProceso ? "SI" : "NO";
+    } else {
+        diferenciaInput.value = "";
+        modeloFuturoSelect.value = "NO";
+    }
+}
+
+anoModeloSelect.addEventListener("change", actualizarVariablesDerivadas);
+anoProcesoSelect.addEventListener("change", actualizarVariablesDerivadas);
+actualizarVariablesDerivadas();
+
+
 document
     .getElementById("formularioVehiculo")
     .addEventListener("submit", async function(event) {
@@ -600,6 +847,26 @@ document
 
         error.style.display = "none";
 
+
+        // ==========================================
+        // VALIDACIONES PREVIAS
+        // ==========================================
+
+        if (!marcaSelect.value) {
+            error.textContent = "❌ Seleccione una marca.";
+            error.style.display = "block";
+            marcaSelect.focus();
+            return;
+        }
+
+        if (!modeloSelect.value) {
+            error.textContent = "❌ Seleccione un modelo correspondiente a la marca elegida.";
+            error.style.display = "block";
+            modeloSelect.focus();
+            return;
+        }
+
+        actualizarVariablesDerivadas();
 
         // ==========================================
         // CONSTRUIR DATOS PARA LA API
@@ -772,6 +1039,33 @@ document
             ).textContent =
                 informacion.caracteristicas_utilizadas;
 
+            const listaProbabilidades =
+                document.getElementById("listaProbabilidades");
+
+            listaProbabilidades.innerHTML = "";
+
+            if (informacion.probabilidades) {
+                const probabilidadesOrdenadas =
+                    Object.entries(informacion.probabilidades)
+                    .sort((a, b) => b[1] - a[1]);
+
+                probabilidadesOrdenadas.forEach(([clase, valor]) => {
+                    const item = document.createElement("div");
+                    item.className = "prob-item";
+
+                    item.innerHTML = `
+                        <div class="prob-label">
+                            <span>${clase}</span>
+                            <strong>${valor.toFixed(2)}%</strong>
+                        </div>
+                        <div class="prob-bar">
+                            <div class="prob-fill" style="width:${Math.min(valor,100)}%"></div>
+                        </div>
+                    `;
+
+                    listaProbabilidades.appendChild(item);
+                });
+            }
 
             resultado.style.display = "block";
 
